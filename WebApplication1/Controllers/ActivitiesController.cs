@@ -37,7 +37,6 @@ namespace WebApplication1.Controllers
 
             var activities = await query.OrderByDescending(a => a.Date).ToListAsync();
             
-            // Преобразуем в DTO для безопасной сериализации
             var result = activities.Select(a => new
             {
                 a.Id,

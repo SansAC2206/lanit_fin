@@ -13,7 +13,6 @@ namespace WebApplication1.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Конфигурация TrainingProgram
             modelBuilder.Entity<TrainingProgram>(entity =>
             {
                 entity.HasKey(e => e.Id);
@@ -30,7 +29,6 @@ namespace WebApplication1.Data
                     .HasDefaultValueSql("GETUTCDATE()");
             });
 
-            // Конфигурация Exercise
             modelBuilder.Entity<Exercise>(entity =>
             {
                 entity.HasKey(e => e.Id);
@@ -49,18 +47,16 @@ namespace WebApplication1.Data
                     .OnDelete(DeleteBehavior.Restrict);
             });
 
-            // Конфигурация Activity
             modelBuilder.Entity<Activity>(entity =>
             {
                 entity.ToTable("Activities", t => t.HasTrigger("SomeTrigger"));
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.Date)
                     .IsRequired()
-                    .HasColumnType("date"); // Только дата без времени
+                    .HasColumnType("date");
 
                 entity.Property(e => e.Minutes)
                     .IsRequired();
-                    //.HasCheckConstraint("CK_Activity_Minutes", "[Minutes] > 0 AND [Minutes] <= 1440");
 
                 entity.Property(e => e.Notes)
                     .HasMaxLength(500);
